@@ -5,17 +5,20 @@ import { SwishPayButton } from "@/components/swish-pay-button";
 export function Hero() {
   return (
     <section id="top" className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden">
-      <img
-        src={campaign.images.hero}
-        alt="Ett klassiskt snapsglas i stearinljus, med en granruska."
-        className="absolute inset-0 size-full object-cover object-center"
-      />
+      <picture>
+        <source media="(min-width: 768px)" srcSet={campaign.images.heroWide} />
+        <img
+          src={campaign.images.hero}
+          alt="Ett klassiskt snapsglas i stearinljus, med en granruska."
+          className="absolute inset-0 size-full object-cover object-center"
+        />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/55 to-bg/15" />
       <div className="relative wrap section-pad pb-16 pt-28 md:pb-24 md:pt-32">
         <img
           src={campaign.logos.rt71}
           alt="Round Table 71 Ljungby"
-          className="h-36 w-36 object-contain md:h-44 md:w-44"
+          className="h-24 w-24 object-contain md:h-28 md:w-28"
         />
         <p className="mt-5 font-display text-sm tracking-[0.28em] text-gold-soft">
           {campaign.clubShort} LJUNGBY

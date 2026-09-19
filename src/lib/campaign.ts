@@ -28,12 +28,13 @@ export const campaign = {
   motto: ["Upptaga", "Anpassa", "Förbättra"] as const,
 
   logos: {
-    rt71: "/brand/rt71-emblem.png",
+    rt71: "/brand/rt71.png",
     rtSweden: "/brand/rt-sweden.jpg",
     swishQr: "/brand/swish/open.png",
   },
   images: {
-    hero: "/hero.jpg",
+    hero: "/hero-glass.jpg",
+    heroWide: "/hero-wide.jpg",
     ljungby: "/ljungby-storgatan.jpg",
   },
 } as const;
