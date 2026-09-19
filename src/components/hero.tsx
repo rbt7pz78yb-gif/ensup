@@ -15,7 +15,7 @@ export function Hero() {
         <img
           src={campaign.logos.rt71}
           alt="Round Table 71 Ljungby"
-          className="h-24 w-24 object-contain md:h-28 md:w-28"
+          className="h-28 w-28 object-contain md:h-32 md:w-32"
         />
         <p className="mt-5 font-display text-sm tracking-[0.28em] text-gold-soft">
           {campaign.clubShort} LJUNGBY

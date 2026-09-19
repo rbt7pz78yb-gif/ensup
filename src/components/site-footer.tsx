@@ -33,7 +33,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <p className="wrap section-pad mt-10 text-sm text-faint">
-        © {new Date().getFullYear()} {campaign.club}
+        © {new Date().getFullYear()} {campaign.club}. Swish {campaign.swishNumberDisplay}.
       </p>
     </footer>
   );

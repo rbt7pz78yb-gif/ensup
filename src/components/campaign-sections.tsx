@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Lock } from "lucide-react";
 import { campaign, formatSek, swishQrSrc } from "@/lib/campaign";
 import { useDonate } from "@/lib/donate-store";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -51,6 +51,13 @@ export function DonationSection() {
             ))}
           </div>
           <SwishPayButton amount={amount} className="mt-6" />
+          <p className="mt-4 flex items-start gap-2 text-sm text-faint">
+            <Lock className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
+            <span>
+              Swish går till Round Table 71 Ljungby, nummer{" "}
+              {campaign.swishNumberDisplay}. Meddelande: {campaign.swishMessage}.
+            </span>
+          </p>
         </div>
         <div id="swish-qr" className="mx-auto w-full max-w-xs rounded-lg bg-fg p-5 text-center text-cta-fg">
           <img
