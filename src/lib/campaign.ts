@@ -32,7 +32,7 @@ export const campaign = {
   },
   images: {
     hero: "/hero.jpg",
-    ljungby: "/ljungby.jpg",
+    ljungby: "/ljungby-storgatan.jpg",
   },
 } as const;
 
