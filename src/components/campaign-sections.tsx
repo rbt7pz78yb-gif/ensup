@@ -27,8 +27,8 @@ export function DonationSection() {
           <Eyebrow>Swisha</Eyebrow>
           <Title>Skänk en sup</Title>
           <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted">
-            Välj en summa. På telefonen öppnas Swish. Vid datorn visar vi QR-koden.
-            Nummer {campaign.swishNumberDisplay}, meddelande {campaign.swishMessage}.
+            Välj en summa. I mobilen öppnas Swish. Vid datorn visar vi QR-koden.
+            Nummer {campaign.swishNumberDisplay}, meddelande ”{campaign.swishMessage}”.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {campaign.amounts.map((a) => (
@@ -55,7 +55,7 @@ export function DonationSection() {
             <Lock className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
             <span>
               Swish går till {campaign.legalName}, org.nr {campaign.orgNumber}.
-              Nummer {campaign.swishNumberDisplay}. Meddelande: {campaign.swishMessage}.
+              Nummer {campaign.swishNumberDisplay}. Meddelande: ”{campaign.swishMessage}”.
             </span>
           </p>
         </div>
@@ -83,14 +83,13 @@ export function GoalSection() {
         <Title>Så många äldre som möjligt</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Vi vill nå ut till så många äldre i Ljungby vi bara kan. Julsnapsen
-            är det vi kan lova. Får vi en större uppslutning kan det växa, men
-            vi sätter inget tak och inget påhittat måltal.
+            Vi vill nå så många äldre i Ljungby som möjligt. Julsnapsen är
+            det vi kan lova. Blir uppslutningen större kan det växa, men vi
+            sätter inget tak och hittar inte på något måltal.
           </p>
           <p>
-            Allt överskott fortsätter gå till välgörenhet. Det har vi gjort
-            i flera år, med olika projekt. Senast, i våras, skänkte vi
-            10 000 kronor till VeraS från interna insamlingar i klubben.
+            Allt överskott går till välgörenhet, som vi har gjort i flera år
+            med olika projekt.
           </p>
         </div>
       </div>
@@ -134,16 +133,16 @@ export function AboutSection() {
           <Title>Round Table 71 Ljungby</Title>
           <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
             <p>
-              Vi är Ljungbys Round Table-klubb. Unga män som träffas, umgås
-              och hittar på saker. Framför allt för att det är kul att göra
-              det tillsammans.
+              Vi är Ljungbys Round Table-klubb. Män som träffas, umgås och
+              hittar på saker. Framför allt för att det är kul att göra det
+              tillsammans.
             </p>
             <p>
               Att göra något för andra hör till. Genom åren har vi haft flera
-              välgörenhetsprojekt. Senast, i våras, samlade vi ihop 10 000
-              kronor internt i klubben och skänkte till VeraS. Nu vill vi
-              sätta guldkant på julen för äldre här i stan, och den här
-              gången kan fler vara med.
+              välgörenhetsprojekt. I våras samlade vi in 10 000 kronor i
+              klubben och skänkte till VeraS. Nu vill vi sätta guldkant på
+              julen för äldre här i stan, och den här gången kan fler vara
+              med.
             </p>
           </div>
         </div>
@@ -181,7 +180,7 @@ export function RoundTableSwedenSection() {
               ställt upp efter katastrofer, bland annat efter tsunamin 2004.
             </p>
             <p>
-              Skänk en sup är Ljungbys tur. Samma sak, här hemma.
+              Skänk en sup är Ljungbys tur. Samma anda, här hemma.
             </p>
           </div>
           <ol className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -249,8 +248,8 @@ export function MoneySection() {
         <Title>Vart går pengarna?</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Till en julskål för äldre i Ljungby. I första hand snapsen. Om
-            mer kommer in kan det bli mer omkring, men vi lovar inte julbord.
+            Till en julskål för äldre i Ljungby. I första hand snapsen. Kommer
+            mer in kan det bli mer runt omkring, men vi lovar inte julbord.
           </p>
           <p>
             Allt överskott går till välgörenhet. Vi redovisar längs vägen.
