@@ -138,7 +138,7 @@ export function AboutSection() {
               det tillsammans.
             </p>
             <p>
-              Ibland blir det också något för andra. I våras samlade vi ihop
+              Att göra något för andra hör till. I våras samlade vi ihop
               10 000 kronor internt i klubben och skänkte till VeraS. Nu vill
               vi sätta guldkant på julen för äldre här i stan, och den här
               gången kan fler vara med.
@@ -166,10 +166,20 @@ export function RoundTableSwedenSection() {
               40. Ideell förening. Kring det runda bordet är alla lika.
             </p>
             <p>
-              Syftet är kamratskap mellan unga män från olika håll, mer koll
-              på samhället och fritt snack. Sen att göra något där man bor.
-              Vi är ingen charityorganisation, men vi gör en hel del charity.
-              Skänk en sup är ett sånt tillfälle.
+              Kamratskapet kommer först. Välgörenhet är en stor del av
+              arbetet. Bara det senaste året har klubbarna i Sverige samlat
+              in över två miljoner kronor till nationella
+              välgörenhetsinitiativ.
+            </p>
+            <p>
+              På riksnivå har vi stöttat Min Stora Dag, som ger svårt sjuka
+              barn en dag de minns. På senare år har vi samlats runt
+              Movember, mot prostatacancer, testikelcancer och psykisk
+              ohälsa hos män. Internationellt har klubbar byggt skolor och
+              ställt upp efter katastrofer, bland annat efter tsunamin 2004.
+            </p>
+            <p>
+              Skänk en sup är Ljungbys tur. Samma sak, här hemma.
             </p>
           </div>
           <ol className="mt-8 grid gap-3 sm:grid-cols-3">
