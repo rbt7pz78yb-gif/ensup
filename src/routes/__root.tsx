@@ -7,7 +7,7 @@ const APP_NAME = "Skänk en sup | RT71 Ljungby";
 const DESCRIPTION =
   "En julskål för äldre i Ljungby. Round Table 71 Ljungby samlar in till en julsnaps. Skänk en sup.";
 const SITE_URL = "https://ensup.se/";
-const OG_IMAGE = "https://ensup.se/og.jpg";
+const OG_IMAGE = "https://ensup.se/og-share.jpg";
 
 export const Route = createRootRoute({
   head: () => ({
