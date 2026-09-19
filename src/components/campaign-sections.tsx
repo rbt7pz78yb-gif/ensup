@@ -88,8 +88,9 @@ export function GoalSection() {
             vi sätter inget tak och inget påhittat måltal.
           </p>
           <p>
-            Allt överskott fortsätter gå till välgörenhet. I våras skänkte vi
-            10 000 kronor till VeraS, från interna insamlingar i klubben.
+            Allt överskott fortsätter gå till välgörenhet. Det har vi gjort
+            i flera år, med olika projekt. Senast, i våras, skänkte vi
+            10 000 kronor till VeraS från interna insamlingar i klubben.
           </p>
         </div>
       </div>
@@ -138,9 +139,10 @@ export function AboutSection() {
               det tillsammans.
             </p>
             <p>
-              Att göra något för andra hör till. I våras samlade vi ihop
-              10 000 kronor internt i klubben och skänkte till VeraS. Nu vill
-              vi sätta guldkant på julen för äldre här i stan, och den här
+              Att göra något för andra hör till. Genom åren har vi haft flera
+              välgörenhetsprojekt. Senast, i våras, samlade vi ihop 10 000
+              kronor internt i klubben och skänkte till VeraS. Nu vill vi
+              sätta guldkant på julen för äldre här i stan, och den här
               gången kan fler vara med.
             </p>
           </div>
