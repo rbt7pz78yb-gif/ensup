@@ -5,14 +5,11 @@ import { SwishPayButton } from "@/components/swish-pay-button";
 export function Hero() {
   return (
     <section id="top" className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden">
-      <picture>
-        <source media="(min-width: 768px)" srcSet={campaign.images.heroWide} />
-        <img
-          src={campaign.images.hero}
-          alt="Ett klassiskt snapsglas i stearinljus, med en granruska."
-          className="absolute inset-0 size-full object-cover object-center"
-        />
-      </picture>
+      <img
+        src={campaign.images.hero}
+        alt="Ett klassiskt snapsglas i stearinljus, med en granruska."
+        className="absolute inset-0 size-full object-cover object-[72%_center]"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/55 to-bg/15" />
       <div className="relative wrap section-pad pb-16 pt-28 md:pb-24 md:pt-32">
         <img
