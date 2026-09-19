@@ -16,7 +16,8 @@ export function SiteFooter() {
           <div>
             <p className="font-display text-2xl tracking-[0.12em] text-fg">SKÄNK EN SUP</p>
             <p className="text-sm text-muted">{campaign.tagline}</p>
-            <p className="mt-1 text-sm text-faint">{campaign.siteHost}</p>
+            <p className="mt-2 text-sm text-muted">{campaign.legalName}</p>
+            <p className="text-sm text-faint">Org.nr {campaign.orgNumber}</p>
           </div>
         </div>
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted" aria-label="Sidfot">
@@ -33,7 +34,9 @@ export function SiteFooter() {
         </nav>
       </div>
       <p className="wrap section-pad mt-10 text-sm text-faint">
-        © {new Date().getFullYear()} {campaign.club}. Swish {campaign.swishNumberDisplay}.
+        {campaign.legalName}. Org.nr {campaign.orgNumber}. Ideell förening.
+        Swish {campaign.swishNumberDisplay}. © {new Date().getFullYear()}{" "}
+        {campaign.club}.
       </p>
     </footer>
   );

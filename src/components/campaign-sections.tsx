@@ -54,8 +54,8 @@ export function DonationSection() {
           <p className="mt-4 flex items-start gap-2 text-sm text-faint">
             <Lock className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
             <span>
-              Swish går till Round Table 71 Ljungby, nummer{" "}
-              {campaign.swishNumberDisplay}. Meddelande: {campaign.swishMessage}.
+              Swish går till {campaign.legalName}, org.nr {campaign.orgNumber}.
+              Nummer {campaign.swishNumberDisplay}. Meddelande: {campaign.swishMessage}.
             </span>
           </p>
         </div>
@@ -269,7 +269,7 @@ export function ContactSection() {
         <Title>Vill du hjälpa till?</Title>
         <p className="mt-6 text-lg leading-relaxed text-muted">
           Swisha, sprid länken eller hör av dig till någon i RT71. Kampanjen
-          körs av Round Table 71 Ljungby.
+          körs av {campaign.legalName}, org.nr {campaign.orgNumber}.
         </p>
         <p className="mt-4 text-sm text-faint">{campaign.siteHost}</p>
       </div>
