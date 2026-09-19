@@ -28,7 +28,7 @@ export const campaign = {
   motto: ["Upptaga", "Anpassa", "Förbättra"] as const,
 
   logos: {
-    rt71: "/brand/rt71-origtop.png",
+    rt71: "/brand/rt71-roofs.png",
     rtSweden: "/brand/rt-sweden.jpg",
     swishQr: "/brand/swish/open.png",
   },
