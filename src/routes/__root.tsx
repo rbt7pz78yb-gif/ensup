@@ -5,7 +5,9 @@ import appCss from "../styles.css?url";
 
 const APP_NAME = "Skänk en sup | RT71 Ljungby";
 const DESCRIPTION =
-  "RT71 Ljungby samlar in pengar för att sätta guldkant på julen för äldre i Ljungby. Skänk en sup och hjälp oss skapa en jul att minnas.";
+  "En julskål för äldre i Ljungby. Round Table 71 Ljungby samlar in till en julsnaps. Skänk en sup.";
+const SITE_URL = "https://ensup.se/";
+const OG_IMAGE = "https://ensup.se/og.jpg";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -15,6 +17,20 @@ export const Route = createRootRoute({
       { title: APP_NAME },
       { name: "description", content: DESCRIPTION },
       { name: "theme-color", content: "#07080A" },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "sv_SE" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: "Skänk en sup" },
+      { property: "og:title", content: APP_NAME },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Ett Fiore snapsglas i stearinljus." },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: APP_NAME },
+      { name: "twitter:description", content: DESCRIPTION },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
       { rel: "canonical", href: "https://ensup.se/" },

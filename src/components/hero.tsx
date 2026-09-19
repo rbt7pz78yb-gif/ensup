@@ -8,7 +8,7 @@ export function Hero() {
       <img
         src={campaign.images.hero}
         alt="Ett klassiskt snapsglas i stearinljus, med en granruska."
-        className="absolute inset-0 size-full object-cover object-[78%_center]"
+        className="absolute inset-0 size-full object-cover object-center"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/55 to-bg/15" />
       <div className="relative wrap section-pad pb-16 pt-28 md:pb-24 md:pt-32">
