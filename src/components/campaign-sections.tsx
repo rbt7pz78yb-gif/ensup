@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
+import { useState } from "react";
 import { ExternalLink, Lock } from "lucide-react";
 import { campaign, formatSek, swishQrSrc } from "@/lib/campaign";
 import { useDonate } from "@/lib/donate-store";
-import { ButtonLink } from "@/components/ui/button-link";
+import { Button, ButtonLink } from "@/components/ui/button-link";
 import { SwishPayButton } from "@/components/swish-pay-button";
+import { ContactDialog } from "@/components/contact-dialog";
 import { cn } from "@/lib/utils";
 
 function Eyebrow({ children }: { children: ReactNode }) {
@@ -253,16 +255,21 @@ export function MoneySection() {
 }
 
 export function ContactSection() {
+  const [open, setOpen] = useState(false);
   return (
     <section id="kontakt" className="scroll-mt-16 border-t border-line bg-bg-2 py-16 md:py-24">
       <div className="wrap section-pad max-w-3xl">
         <Eyebrow>Kontakt</Eyebrow>
         <Title>Vill du hjälpa till?</Title>
         <p className="mt-6 text-lg leading-relaxed text-muted">
-          Swisha, sprid länken eller hör av dig till någon i RT71.
+          Swisha, sprid länken eller skriv till oss. Vi läser allt som kommer in.
         </p>
+        <Button type="button" className="mt-8" onClick={() => setOpen(true)}>
+          Skriv till oss
+        </Button>
         <p className="mt-4 text-sm text-faint">{campaign.siteHost}</p>
       </div>
+      <ContactDialog open={open} onClose={() => setOpen(false)} />
     </section>
   );
 }
