@@ -7,6 +7,7 @@ export async function deliverContact(input: {
   name: string;
   email: string;
   message: string;
+  phone?: string;
 }) {
   const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(TO)}`, {
     method: "POST",
@@ -20,6 +21,7 @@ export async function deliverContact(input: {
     body: JSON.stringify({
       name: input.name,
       email: input.email,
+      telefon: input.phone || "—",
       _replyto: input.email,
       message: input.message,
       _subject: `Skänk en sup — meddelande från ${input.name}`,

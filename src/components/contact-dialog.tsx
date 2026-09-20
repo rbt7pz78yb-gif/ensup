@@ -15,6 +15,7 @@ export function ContactDialog({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -37,6 +38,7 @@ export function ContactDialog({
       setStatus("idle");
       setName("");
       setEmail("");
+      setPhone("");
       setMessage("");
       setWebsite("");
     }
@@ -47,7 +49,7 @@ export function ContactDialog({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("sending");
-    const payload = { name, email, message, website };
+    const payload = { name, email, phone, message, website };
     try {
       await sendContact({ data: payload });
       setStatus("sent");
@@ -67,6 +69,7 @@ export function ContactDialog({
         body: JSON.stringify({
           name,
           email,
+          telefon: phone || "—",
           _replyto: email,
           message,
           _subject: `Skänk en sup — meddelande från ${name}`,
@@ -144,6 +147,17 @@ export function ContactDialog({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
+                className={fieldClass}
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm text-muted">Telefon (valfritt)</span>
+              <input
+                type="tel"
+                maxLength={30}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                autoComplete="tel"
                 className={fieldClass}
               />
             </label>

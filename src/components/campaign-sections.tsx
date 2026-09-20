@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { ExternalLink, Lock } from "lucide-react";
 import { campaign, formatSek, swishQrSrc } from "@/lib/campaign";
-import { useDonate } from "@/lib/donate-store";
+import { amountFromDonate, useDonate } from "@/lib/donate-store";
 import { Button, ButtonLink } from "@/components/ui/button-link";
 import { SwishPayButton } from "@/components/swish-pay-button";
 import { ContactDialog } from "@/components/contact-dialog";
@@ -20,8 +20,11 @@ function Title({ children }: { children: ReactNode }) {
 }
 
 export function DonationSection() {
-  const amount = useDonate((s) => s.amount);
-  const setAmount = useDonate((s) => s.setAmount);
+  const selected = useDonate((s) => s.selected);
+  const custom = useDonate((s) => s.custom);
+  const setSelected = useDonate((s) => s.setSelected);
+  const setCustom = useDonate((s) => s.setCustom);
+  const amount = amountFromDonate(selected, custom);
 
   return (
     <section id="skank" className="scroll-mt-16 border-t border-line bg-bg-2 py-16 md:py-24">
@@ -38,21 +41,46 @@ export function DonationSection() {
               <button
                 key={a.value}
                 type="button"
-                onClick={() => setAmount(a.value)}
+                onClick={() => setSelected(a.value)}
                 className={cn(
                   "min-h-16 rounded-md px-3 py-3 text-left outline outline-1 -outline-offset-1 transition",
-                  amount === a.value
+                  selected === a.value
                     ? "bg-gold text-cta-fg outline-gold"
                     : "bg-surface text-fg outline-fg/10 hover:outline-fg/25",
                 )}
               >
                 <span className="block font-display text-2xl tracking-[0.06em]">{formatSek(a.value)}</span>
-                <span className={cn("text-sm", amount === a.value ? "text-cta-fg/80" : "text-muted")}>
+                <span className={cn("text-sm", selected === a.value ? "text-cta-fg/80" : "text-muted")}>
                   {a.label}
                 </span>
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setSelected("custom")}
+            className={cn(
+              "mt-3 flex min-h-14 w-full items-center justify-between rounded-md px-4 text-left outline outline-1 -outline-offset-1 transition",
+              selected === "custom"
+                ? "bg-gold text-cta-fg outline-gold"
+                : "bg-surface text-fg outline-fg/10 hover:outline-fg/25",
+            )}
+          >
+            <span className="font-display text-xl tracking-[0.08em]">Valfritt belopp</span>
+          </button>
+          {selected === "custom" ? (
+            <label className="mt-3 block">
+              <span className="sr-only">Belopp i kronor</span>
+              <input
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={custom}
+                onChange={(e) => setCustom(e.target.value.replace(/[^\d]/g, "").slice(0, 6))}
+                placeholder="Belopp i kr"
+                className="min-h-12 w-full rounded-md bg-surface px-4 text-lg text-fg outline outline-1 -outline-offset-1 outline-fg/15 placeholder:text-faint focus:outline-gold"
+              />
+            </label>
+          ) : null}
           <SwishPayButton amount={amount} className="mt-6" />
           <p className="mt-4 flex items-start gap-2 text-sm text-faint">
             <Lock className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
@@ -61,17 +89,24 @@ export function DonationSection() {
               Meddelande: ”{campaign.swishMessage}”.
             </span>
           </p>
+          <p className="mt-2 text-sm text-faint">Alkohol är frivilligt, bara för den som vill.</p>
         </div>
         <div id="swish-qr" className="mx-auto w-full max-w-xs rounded-lg bg-fg p-5 text-center text-cta-fg">
           <img
             src={swishQrSrc(amount)}
-            alt={`Swish QR för ${formatSek(amount)} till ${campaign.clubShort}.`}
+            alt={
+              amount
+                ? `Swish QR för ${formatSek(amount)} till ${campaign.clubShort}.`
+                : `Swish QR till ${campaign.clubShort}.`
+            }
             className="mx-auto aspect-square w-full bg-white object-contain"
           />
           <p className="mt-4 font-display text-xl tracking-[0.12em]">
             {campaign.swishNumberDisplay}
           </p>
-          <p className="text-sm text-cta-fg/70">{formatSek(amount)} · {campaign.swishMessage}</p>
+          <p className="text-sm text-cta-fg/70">
+            {amount ? `${formatSek(amount)} · ${campaign.swishMessage}` : campaign.swishMessage}
+          </p>
         </div>
       </div>
     </section>
@@ -106,8 +141,8 @@ export function CampaignStory() {
         <Title>En julsnaps</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            En julskål för äldre i Ljungby. En traditionell snaps. Det är det
-            här handlar om.
+            En julskål för äldre i Ljungby. En traditionell snaps, för den som
+            vill. Det är det här handlar om.
           </p>
         </div>
       </div>

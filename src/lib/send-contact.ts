@@ -4,6 +4,7 @@ import { z } from "zod";
 const schema = z.object({
   name: z.string().trim().min(2).max(80),
   email: z.string().trim().email().max(120),
+  phone: z.string().trim().max(30).optional(),
   message: z.string().trim().min(10).max(2000),
   website: z.string().max(80).optional(),
 });
@@ -17,6 +18,7 @@ export const sendContact = createServerFn({ method: "POST" })
       await deliverContact({
         name: data.name,
         email: data.email,
+        phone: data.phone,
         message: data.message,
       });
     } catch (e) {
