@@ -25,9 +25,7 @@ export function Hero() {
         </h1>
         <p className="mt-4 max-w-xl text-xl text-fg md:text-2xl">{campaign.tagline}</p>
         <p className="mt-4 max-w-lg text-base leading-relaxed text-muted md:text-lg">
-          Vi i RT71 vill att äldre här i stan ska få höja ett glas i jul. En
-          skål kan vi alltid lösa. Blir uppslutningen större kan det växa, men
-          vi lovar inte mer än vi kan hålla.
+          Vi i RT71 vill att äldre här i stan ska få en julsnaps.
         </p>
         <div className="mt-8 flex max-w-md flex-col gap-3 sm:max-w-sm">
           <SwishPayButton amount={50} />

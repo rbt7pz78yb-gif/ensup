@@ -83,9 +83,7 @@ export function GoalSection() {
         <Title>Så många äldre som möjligt</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Vi vill nå så många äldre i Ljungby som möjligt. Julsnapsen är
-            det vi kan lova. Blir uppslutningen större kan det växa, men vi
-            sätter inget tak och hittar inte på något måltal.
+            Vi vill nå så många äldre i Ljungby som möjligt med en julsnaps.
           </p>
           <p>
             Allt överskott går till välgörenhet, som vi har gjort i flera år
@@ -102,16 +100,11 @@ export function CampaignStory() {
     <section id="kampanjen" className="scroll-mt-16 border-t border-line bg-bg-2 py-16 md:py-24">
       <div className="wrap section-pad max-w-3xl">
         <Eyebrow>Om kampanjen</Eyebrow>
-        <Title>Börja med det vi kan hålla</Title>
+        <Title>En julsnaps</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            En julskål för äldre i Ljungby. Dryck, sällskap och för den som
-            vill en traditionell julsnaps. Det är kärnan.
-          </p>
-          <p>
-            Julbord lovar vi inte. Det blir snabbt för dyrt. En snaps kan vi
-            alltid lösa. Blir backningen stor kan det utvecklas mer. Då
-            berättar vi det.
+            En julskål för äldre i Ljungby. En traditionell snaps. Det är det
+            här handlar om.
           </p>
         </div>
       </div>
@@ -248,8 +241,7 @@ export function MoneySection() {
         <Title>Vart går pengarna?</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Till en julskål för äldre i Ljungby. I första hand snapsen. Kommer
-            mer in kan det bli mer runt omkring, men vi lovar inte julbord.
+            Till en julsnaps för äldre i Ljungby.
           </p>
           <p>
             Allt överskott går till välgörenhet. Vi redovisar längs vägen.
