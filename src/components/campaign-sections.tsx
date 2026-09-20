@@ -121,10 +121,10 @@ export function GoalSection() {
         <Title>Så många äldre som möjligt</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Vi vill nå så många äldre i Ljungby som möjligt med en julsnaps.
+            Vi vill att så många äldre i Ljungby som möjligt ska få en julskål.
           </p>
           <p>
-            Allt överskott går till välgörenhet, som vi har gjort i flera år
+            Allt överskott går till välgörenhet. Så har vi gjort i flera år,
             med olika projekt.
           </p>
         </div>
@@ -138,11 +138,11 @@ export function CampaignStory() {
     <section id="kampanjen" className="scroll-mt-16 border-t border-line bg-bg-2 py-16 md:py-24">
       <div className="wrap section-pad max-w-3xl">
         <Eyebrow>Om kampanjen</Eyebrow>
-        <Title>En julsnaps</Title>
+        <Title>En julskål</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            En julskål för äldre i Ljungby. En traditionell snaps, för den som
-            vill. Det är det här handlar om.
+            Du skänker en sup. Någon annan får en julskål. För den som vill.
+            Det är vad det här handlar om.
           </p>
         </div>
       </div>
@@ -171,7 +171,7 @@ export function AboutSection() {
             <p>
               Att göra något för andra hör till. Genom åren har vi haft flera
               välgörenhetsprojekt. I våras samlade vi in 10 000 kronor i
-              klubben och skänkte till VeraS. Nu vill vi sätta guldkant på
+              klubben och skänkte dem till VeraS. Nu vill vi sätta guldkant på
               julen för äldre här i stan, och den här gången kan fler vara
               med.
             </p>
@@ -204,11 +204,12 @@ export function RoundTableSwedenSection() {
               välgörenhetsinitiativ.
             </p>
             <p>
-              På riksnivå har vi stöttat Min Stora Dag, som ger svårt sjuka
-              barn en dag de minns. På senare år har vi samlats runt
-              Movember, mot prostatacancer, testikelcancer och psykisk
-              ohälsa hos män. Internationellt har klubbar byggt skolor och
-              ställt upp efter katastrofer, bland annat efter tsunamin 2004.
+              På riksnivå har Round Table stöttat Min Stora Dag, som ger
+              svårt sjuka barn en dag de minns. På senare år har klubbarna
+              arbetat med Movember, mot prostatacancer, testikelcancer och
+              psykisk ohälsa hos män. Internationellt har klubbar byggt
+              skolor och ställt upp efter katastrofer, bland annat efter
+              tsunamin 2004.
             </p>
             <p>
               Skänk en sup är Ljungbys tur. Samma anda, här hemma.
@@ -279,7 +280,7 @@ export function MoneySection() {
         <Title>Vart går pengarna?</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Till en julsnaps för äldre i Ljungby.
+            Till en julskål för äldre i Ljungby.
           </p>
           <p>
             Allt överskott går till välgörenhet. Vi redovisar längs vägen.

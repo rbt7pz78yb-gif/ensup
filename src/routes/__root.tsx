@@ -5,7 +5,7 @@ import appCss from "../styles.css?url";
 
 const APP_NAME = "Skänk en sup | RT71 Ljungby";
 const DESCRIPTION =
-  "En julskål för äldre i Ljungby. Round Table 71 Ljungby samlar in till en julsnaps. Skänk en sup.";
+  "En julskål för äldre i Ljungby. Skänk en sup. Round Table 71 Ljungby.";
 const SITE_URL = "https://ensup.se/";
 const OG_IMAGE = "https://ensup.se/og-share.jpg";
 
