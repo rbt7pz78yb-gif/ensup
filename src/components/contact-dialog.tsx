@@ -47,12 +47,42 @@ export function ContactDialog({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("sending");
+    const payload = { name, email, message, website };
     try {
-      await sendContact({ data: { name, email, message, website } });
+      await sendContact({ data: payload });
       setStatus("sent");
+      return;
     } catch {
-      setStatus("error");
+      /* server blocked — try from the browser */
     }
+    if (website) {
+      setStatus("sent");
+      return;
+    }
+    try {
+      const to = `${["erik", "richter"].join(".")}@${["71-se", "roundtable", "world"].join(".")}`;
+      const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          _replyto: email,
+          message,
+          _subject: `Skänk en sup — meddelande från ${name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      const body = (await res.json()) as { success?: boolean | string };
+      if (body.success === true || body.success === "true") {
+        setStatus("sent");
+        return;
+      }
+    } catch {
+      /* fall through */
+    }
+    setStatus("error");
   }
 
   return (
@@ -142,7 +172,7 @@ export function ContactDialog({
             </div>
             {status === "error" ? (
               <p className="text-sm text-gold-soft">
-                Det gick inte att skicka just nu. Försök igen om en stund.
+                Det gick inte att skicka just nu. Vänta en minut och försök igen.
               </p>
             ) : null}
             <Button type="submit" className="w-full" disabled={status === "sending"}>
