@@ -1,4 +1,5 @@
 import { campaign } from "@/lib/campaign";
+import { PrivacyLink } from "@/components/privacy-dialog";
 
 const links = [
   { href: "#kampanjen", label: "Om kampanjen" },
@@ -32,7 +33,8 @@ export function SiteFooter() {
         </nav>
       </div>
       <p className="wrap section-pad mt-10 text-sm text-faint">
-        {campaign.club}. Ideell förening. Swish {campaign.swishNumberDisplay}. ©{" "}
+        {campaign.club}. Ideell förening. Swish {campaign.swishNumberDisplay}.{" "}
+        <PrivacyLink className="underline-offset-4 hover:text-muted hover:underline" />. ©{" "}
         {new Date().getFullYear()}.
       </p>
     </footer>

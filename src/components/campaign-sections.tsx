@@ -6,6 +6,7 @@ import { useDonate } from "@/lib/donate-store";
 import { Button, ButtonLink } from "@/components/ui/button-link";
 import { SwishPayButton } from "@/components/swish-pay-button";
 import { ContactDialog } from "@/components/contact-dialog";
+import { PrivacyLink } from "@/components/privacy-dialog";
 import { cn } from "@/lib/utils";
 
 function Eyebrow({ children }: { children: ReactNode }) {
@@ -267,7 +268,9 @@ export function ContactSection() {
         <Button type="button" className="mt-8" onClick={() => setOpen(true)}>
           Skriv till oss
         </Button>
-        <p className="mt-4 text-sm text-faint">{campaign.siteHost}</p>
+        <p className="mt-4 text-sm text-faint">
+          <PrivacyLink className="min-h-11 text-faint underline-offset-4 hover:text-muted hover:underline" />
+        </p>
       </div>
       <ContactDialog open={open} onClose={() => setOpen(false)} />
     </section>
