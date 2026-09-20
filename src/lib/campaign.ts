@@ -3,8 +3,6 @@ export const campaign = {
   tagline: "En julskål för äldre i Ljungby.",
   club: "Round Table 71 Ljungby",
   clubShort: "RT71",
-  legalName: "ROUND TABLE NR 71",
-  orgNumber: "802554-4324",
   siteUrl: "https://ensup.se",
   siteHost: "ensup.se",
 
