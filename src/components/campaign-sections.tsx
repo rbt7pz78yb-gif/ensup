@@ -124,8 +124,7 @@ export function GoalSection() {
             Vi vill att så många äldre i Ljungby som möjligt ska få en julskål.
           </p>
           <p>
-            Allt överskott går till välgörenhet. Så har vi gjort i flera år,
-            med olika projekt.
+            Det här är årets välgörenhet från RT71.
           </p>
         </div>
       </div>
@@ -283,7 +282,7 @@ export function MoneySection() {
             Till en julskål för äldre i Ljungby.
           </p>
           <p>
-            Allt överskott går till välgörenhet. Vi redovisar längs vägen.
+            Vi redovisar längs vägen hur mycket som kommit in.
           </p>
         </div>
       </div>
