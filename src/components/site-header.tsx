@@ -40,20 +40,24 @@ export function SiteHeader() {
           : "bg-transparent",
       )}
     >
-      <div className="wrap section-pad flex h-14 items-center justify-between md:h-16">
-        <a href="#top" className="flex min-h-11 items-center gap-2.5" aria-label="Skänk en sup, startsida">
+      <div className="wrap section-pad flex h-14 items-center justify-between gap-4 md:h-16">
+        <a href="#top" className="flex min-h-11 shrink-0 items-center gap-2.5" aria-label="Skänk en sup, startsida">
           <img src={campaign.logos.rt71} alt="" className="h-11 w-11 object-contain md:h-12 md:w-12" />
-          <span className="font-display text-xl leading-none tracking-[0.14em] text-fg md:text-2xl">
+          <span className="whitespace-nowrap font-display text-xl leading-none tracking-[0.1em] text-fg md:text-2xl">
             SKÄNK EN SUP
           </span>
         </a>
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Sektioner">
+        <nav className="hidden min-w-0 flex-nowrap items-center gap-4 lg:flex xl:gap-6" aria-label="Sektioner">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm text-muted transition-colors hover:text-fg">
+            <a
+              key={l.href}
+              href={l.href}
+              className="whitespace-nowrap text-sm text-muted transition-colors hover:text-fg"
+            >
               {l.label}
             </a>
           ))}
-          <SwishPayButton amount={50} className="ml-2 w-auto min-h-11 px-5 text-sm">
+          <SwishPayButton amount={50} className="ml-1 w-auto min-h-11 shrink-0 px-4 text-sm">
             Swisha 50 kr
           </SwishPayButton>
         </nav>

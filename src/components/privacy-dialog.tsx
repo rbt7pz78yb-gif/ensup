@@ -102,6 +102,15 @@ export function PrivacyDialog({
           <p className="mt-3">Vi säljer inte dina personuppgifter till andra.</p>
 
           <h3 className="mt-6 font-display text-xl tracking-[0.08em] text-fg">
+            Besöksstatistik
+          </h3>
+          <p className="mt-2">
+            Vi räknar visningar med Vercel Analytics för att se hur sidan används.
+            Den sätter inga cookies och samlar inte in namn, e-post eller andra
+            uppgifter du skriver i formuläret.
+          </p>
+
+          <h3 className="mt-6 font-display text-xl tracking-[0.08em] text-fg">
             Hur länge sparar vi uppgifterna?
           </h3>
           <p className="mt-2">

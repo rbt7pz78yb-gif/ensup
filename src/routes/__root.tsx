@@ -1,6 +1,7 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
+import { SiteAnalytics } from "@/components/site-analytics";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Skänk en sup | RT71 Ljungby";
@@ -57,6 +58,7 @@ export const Route = createRootRoute({
       </head>
       <body className="bg-bg text-fg">
         <PreviewHostBridge />
+        <SiteAnalytics />
         <AuthProvider>
           <Outlet />
         </AuthProvider>
