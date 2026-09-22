@@ -1,14 +1,10 @@
 import { useEffect, useId, useState } from "react";
-import { Check, Copy, Facebook, Instagram, Linkedin, X } from "lucide-react";
+import { Share2, X } from "lucide-react";
 import { campaign } from "@/lib/campaign";
+import { Button } from "@/components/ui/button-link";
 import {
   consumeReturnedIntent,
-  copyShareText,
-  facebookShareUrl,
-  isMobile,
-  linkedinComposerUrl,
   markSwishLeft,
-  openNew,
   shareText,
   thanksTitle,
   type SwishIntent,
@@ -66,15 +62,11 @@ function ThanksDialog({
   onClose: () => void;
 }) {
   const titleId = useId();
-  const [draft, setDraft] = useState("");
   const [copied, setCopied] = useState(false);
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (!intent) return;
-    setDraft(shareText(intent.amount));
     setCopied(false);
-    setStatus("");
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -89,31 +81,27 @@ function ThanksDialog({
 
   if (!intent) return null;
 
-  async function copyDraft() {
-    const ok = await copyShareText(draft);
-    setCopied(ok);
-    setStatus(ok ? "Texten är kopierad." : "Markera texten och kopiera manuellt.");
-    return ok;
-  }
+  const url = campaign.siteUrl;
+  const text = shareText(intent.amount);
 
-  async function shareFacebook() {
-    await copyDraft();
-    setStatus("Öppnar Facebook. Klistra in texten ovanför länken.");
-    openNew(facebookShareUrl(campaign.siteUrl));
-  }
-
-  async function shareLinkedIn() {
-    setStatus("Öppnar LinkedIn med texten ifylld.");
-    openNew(linkedinComposerUrl(draft));
-  }
-
-  async function shareInstagram() {
-    await copyDraft();
-    if (isMobile()) {
-      setStatus("Texten är kopierad. Öppnar Instagram.");
-      openNew("instagram://app");
-    } else {
-      setStatus("Texten är kopierad. Öppna Instagram i telefonen och klistra in.");
+  async function onShare() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: campaign.name,
+          text,
+          url,
+        });
+        return;
+      } catch {
+        return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+    } catch {
+      setCopied(true);
     }
   }
 
@@ -131,8 +119,8 @@ function ThanksDialog({
       >
         <img
           src={campaign.images.hero}
-          alt="Kampanjbild: snapsglas i stearinljus"
-          className="h-40 w-full object-cover sm:h-48"
+          alt=""
+          className="h-40 w-full object-cover object-[72%_center] sm:h-48"
         />
         <div className="p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
@@ -149,58 +137,16 @@ function ThanksDialog({
           <h2 id={titleId} className="mt-2 font-display text-4xl tracking-[0.06em] text-fg sm:text-5xl">
             {thanksTitle(intent.amount)}
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-muted">
-            Jag har skänkt en sup. Nu är det din tur.
+          <p className="mt-4 text-lg leading-relaxed text-muted">
+            Du är med och skapar julstämning för en äldre Ljungbybo.
           </p>
-          <div className="mt-4 flex items-end justify-between gap-3">
-            <label className="text-sm text-muted" htmlFor="share-draft">
-              Färdigt inlägg
-            </label>
-            <button
-              type="button"
-              onClick={copyDraft}
-              className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-gold outline outline-1 -outline-offset-1 outline-gold/40"
-            >
-              {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-              {copied ? "Kopierad" : "Kopiera"}
-            </button>
-          </div>
-          <textarea
-            id="share-draft"
-            value={draft}
-            onChange={(e) => {
-              setDraft(e.target.value);
-              setCopied(false);
-            }}
-            className="mt-2 min-h-40 w-full resize-y rounded-md bg-bg px-3 py-3 text-sm leading-relaxed text-fg outline outline-1 -outline-offset-1 outline-fg/15"
-          />
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <button
-              type="button"
-              onClick={shareFacebook}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#1877f2] px-4 font-semibold text-white"
-            >
-              <Facebook className="size-4" aria-hidden />
-              Facebook
-            </button>
-            <button
-              type="button"
-              onClick={shareInstagram}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[linear-gradient(135deg,#f58529,#dd2a7b_52%,#8134af)] px-4 font-semibold text-white sm:scale-105"
-            >
-              <Instagram className="size-4" aria-hidden />
-              Instagram
-            </button>
-            <button
-              type="button"
-              onClick={shareLinkedIn}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#0a66c2] px-4 font-semibold text-white"
-            >
-              <Linkedin className="size-4" aria-hidden />
-              LinkedIn
-            </button>
-          </div>
-          {status ? <p className="mt-3 text-sm leading-relaxed text-gold">{status}</p> : null}
+          <p className="mt-3 text-base leading-relaxed text-muted">
+            Vill du hjälpa oss att nå fler? Dela gärna.
+          </p>
+          <Button type="button" variant="gold" className="mt-6 w-full" onClick={onShare}>
+            <Share2 className="size-4" aria-hidden />
+            {copied ? "Kopierat" : "Dela"}
+          </Button>
         </div>
       </div>
     </div>
