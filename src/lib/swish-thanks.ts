@@ -103,74 +103,27 @@ function ua() {
   return typeof navigator === "undefined" ? "" : navigator.userAgent;
 }
 
-export function isAndroid() {
-  return /Android/i.test(ua());
+export function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(ua());
 }
 
-export function isIOS() {
-  return /iPhone|iPad|iPod/i.test(ua());
-}
-
-function tapLink(href: string) {
-  const link = document.createElement("a");
-  link.href = href;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-}
-
-function pokeScheme(schemeUrl: string) {
-  try {
-    const iframe = document.createElement("iframe");
-    iframe.setAttribute("aria-hidden", "true");
-    iframe.style.display = "none";
-    iframe.src = schemeUrl;
-    document.body.appendChild(iframe);
-    window.setTimeout(() => iframe.remove(), 1500);
-  } catch {
-    /* ignore */
+export function openNew(url: string) {
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }
 
-export function openInApp(appUrl: string, webUrl: string, androidUrl?: string) {
-  if (isAndroid() && androidUrl) {
-    pokeScheme(androidUrl);
-    tapLink(webUrl);
-    return;
-  }
-  if (isIOS() && appUrl !== webUrl) {
-    pokeScheme(appUrl);
-    tapLink(webUrl);
-    return;
-  }
-  tapLink(webUrl);
+export function facebookShareUrl(siteUrl: string) {
+  return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`;
 }
 
-export function facebookTargets(siteUrl: string) {
-  const web = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`;
-  return {
-    web,
-    ios: "fb://share",
-    android: `intent://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}#Intent;scheme=https;package=com.facebook.katana;S.browser_fallback_url=${encodeURIComponent(web)};end`,
-  };
-}
-
-export function linkedinTargets(text: string, siteUrl: string) {
-  const composer = `https://www.linkedin.com/feed/?shareActive=true&mini=true&text=${encodeURIComponent(text)}`;
-  return {
-    web: composer,
-    ios: `linkedin://shareArticle?mini=true&url=${encodeURIComponent(siteUrl)}&summary=${encodeURIComponent(text)}`,
-    android: `intent://www.linkedin.com/feed/?shareActive=true&mini=true&text=${encodeURIComponent(text)}#Intent;scheme=https;package=com.linkedin.android;S.browser_fallback_url=${encodeURIComponent(composer)};end`,
-  };
-}
-
-export function instagramTargets() {
-  const web = "https://www.instagram.com/";
-  return {
-    web,
-    ios: "instagram://app",
-    android: `intent://www.instagram.com/#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url=${encodeURIComponent(web)};end`,
-  };
+export function linkedinComposerUrl(text: string) {
+  return `https://www.linkedin.com/feed/?shareActive&mini=true&text=${encodeURIComponent(text)}`;
 }
