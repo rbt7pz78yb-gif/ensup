@@ -27,7 +27,18 @@ export function thanksTitle(amount?: number) {
 
 export function shareText(amount?: number) {
   const gift = amountLabel(amount).toLowerCase();
-  return `Jag skänkte ${gift} till äldre i Ljungby. Skänk du också: ${campaign.siteUrl}`;
+  return [
+    `Jag har precis skänkt ${gift}.`,
+    "",
+    "Nu är det din tur.",
+    "",
+    `${campaign.tagline} Swisha 20, 50, 100 eller 500 kr till ${campaign.swishNumberDisplay}. Meddelande: ${campaign.swishMessage}.`,
+    "",
+    "Alkohol är frivilligt – det viktiga är skålen.",
+    campaign.siteHost,
+    "",
+    "#skänkensup #ljungby #rt71",
+  ].join("\n");
 }
 
 export function markSwishIntent(amount?: number) {
@@ -68,4 +79,51 @@ export function consumeReturnedIntent(): SwishIntent | null {
   if (away < MIN_AWAY_MS || age > MAX_AGE_MS) return null;
   sessionStorage.removeItem(KEY);
   return intent;
+}
+
+export async function copyShareText(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const tmp = document.createElement("textarea");
+    tmp.value = text;
+    tmp.setAttribute("readonly", "");
+    tmp.style.position = "fixed";
+    tmp.style.left = "-9999px";
+    document.body.appendChild(tmp);
+    tmp.select();
+    const ok = document.execCommand("copy");
+    tmp.remove();
+    return ok;
+  }
+}
+
+export function tryOpenApp(appUrl: string, webUrl: string) {
+  const started = Date.now();
+  const timer = window.setTimeout(() => {
+    if (document.visibilityState === "visible" && Date.now() - started < 1800) {
+      window.location.href = webUrl;
+    }
+  }, 900);
+  const cancel = () => window.clearTimeout(timer);
+  window.addEventListener("pagehide", cancel, { once: true });
+  window.addEventListener("blur", cancel, { once: true });
+  window.location.href = appUrl;
+}
+
+export async function downloadCampaignImage() {
+  const src = campaign.images.hero;
+  try {
+    const res = await fetch(src);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "skank-en-sup.jpg";
+    a.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch {
+    window.open(src, "_blank", "noopener,noreferrer");
+  }
 }

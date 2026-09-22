@@ -1,12 +1,14 @@
 import { useEffect, useId, useState } from "react";
 import { Facebook, Instagram, Linkedin, X } from "lucide-react";
 import { campaign } from "@/lib/campaign";
-import { Button } from "@/components/ui/button-link";
 import {
   consumeReturnedIntent,
+  copyShareText,
+  downloadCampaignImage,
   markSwishLeft,
   shareText,
   thanksTitle,
+  tryOpenApp,
   type SwishIntent,
 } from "@/lib/swish-thanks";
 
@@ -51,10 +53,13 @@ function ThanksDialog({
   onClose: () => void;
 }) {
   const titleId = useId();
-  const [copied, setCopied] = useState(false);
+  const [draft, setDraft] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (!intent) return;
+    setDraft(shareText(intent.amount));
+    setStatus("");
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -67,33 +72,34 @@ function ThanksDialog({
     };
   }, [intent, onClose]);
 
-  useEffect(() => {
-    setCopied(false);
-  }, [intent]);
-
   if (!intent) return null;
 
   const url = campaign.siteUrl;
-  const text = shareText(intent.amount);
-  const facebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-  const linkedin = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  const facebookWeb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(draft)}`;
+  const linkedinWeb = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+
+  async function shareFacebook() {
+    await copyShareText(draft);
+    tryOpenApp(`fb://facewebmodal/f?href=${encodeURIComponent(facebookWeb)}`, facebookWeb);
+  }
+
+  async function shareLinkedIn() {
+    await copyShareText(`${draft}\n\n${url}`);
+    tryOpenApp(
+      `linkedin://shareArticle?mini=true&url=${encodeURIComponent(url)}&summary=${encodeURIComponent(draft)}`,
+      linkedinWeb,
+    );
+  }
 
   async function shareInstagram() {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: campaign.name, text, url });
-        return;
-      } catch {
-        /* cancelled */
-        return;
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-    } catch {
-      setCopied(true);
-    }
+    const copied = await copyShareText(draft);
+    await downloadCampaignImage();
+    setStatus(
+      copied
+        ? "Texten är kopierad och bilden nedladdad. Öppnar Instagram — klistra in texten och välj bilden."
+        : "Öppnar Instagram. Klistra in texten och välj kampanjbilden.",
+    );
+    tryOpenApp("instagram://app", "https://www.instagram.com/");
   }
 
   return (
@@ -105,52 +111,71 @@ function ThanksDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="w-full max-w-md rounded-lg bg-surface p-6 outline outline-1 -outline-offset-1 outline-fg/15 sm:p-8"
+        className="w-full max-w-md overflow-hidden rounded-lg bg-surface outline outline-1 -outline-offset-1 outline-fg/15"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-4">
-          <p className="font-display text-sm tracking-[0.28em] text-gold">{intent.label}</p>
-          <button
-            type="button"
-            onClick={onClose}
-            className="inline-flex size-11 shrink-0 items-center justify-center rounded-md text-muted hover:text-fg"
-            aria-label="Stäng"
-          >
-            <X className="size-5" />
-          </button>
-        </div>
-        <h2 id={titleId} className="mt-2 font-display text-4xl tracking-[0.06em] text-fg sm:text-5xl">
-          {thanksTitle(intent.amount)}
-        </h2>
-        <p className="mt-4 text-lg leading-relaxed text-muted">
-          Du är med och skapar julstämning för en äldre Ljungbybo.
-        </p>
-        <p className="mt-3 text-base leading-relaxed text-muted">
-          Nu kan du hjälpa oss att nå ännu fler.
-        </p>
-        <div className="mt-6 flex flex-col gap-3">
-          <Button type="button" variant="gold" className="w-full" onClick={shareInstagram}>
-            <Instagram className="size-4" aria-hidden />
-            {copied ? "Länken är kopierad" : "Dela på Instagram"}
-          </Button>
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 font-semibold text-fg outline outline-1 -outline-offset-1 outline-fg/20 transition hover:outline-fg/40"
-          >
-            <Linkedin className="size-4" aria-hidden />
-            Dela på LinkedIn
-          </a>
-          <a
-            href={facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 font-semibold text-fg outline outline-1 -outline-offset-1 outline-fg/20 transition hover:outline-fg/40"
-          >
-            <Facebook className="size-4" aria-hidden />
-            Dela på Facebook
-          </a>
+        <img
+          src={campaign.images.hero}
+          alt="Kampanjbild: snapsglas i stearinljus"
+          className="h-40 w-full object-cover sm:h-48"
+        />
+        <div className="p-6 sm:p-8">
+          <div className="flex items-start justify-between gap-4">
+            <p className="font-display text-sm tracking-[0.28em] text-gold">{intent.label}</p>
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-md text-muted hover:text-fg"
+              aria-label="Stäng"
+            >
+              <X className="size-5" />
+            </button>
+          </div>
+          <h2 id={titleId} className="mt-2 font-display text-4xl tracking-[0.06em] text-fg sm:text-5xl">
+            {thanksTitle(intent.amount)}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-muted">
+            Jag har skänkt en sup. Nu är det din tur.
+          </p>
+          <label className="mt-4 block text-sm text-muted" htmlFor="share-draft">
+            Färdigt inlägg
+          </label>
+          <textarea
+            id="share-draft"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            className="mt-2 min-h-40 w-full resize-y rounded-md bg-bg px-3 py-3 text-sm leading-relaxed text-fg outline outline-1 -outline-offset-1 outline-fg/15"
+          />
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <button
+              type="button"
+              onClick={shareFacebook}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#1877f2] px-4 font-semibold text-white"
+            >
+              <Facebook className="size-4" aria-hidden />
+              Facebook
+            </button>
+            <button
+              type="button"
+              onClick={shareInstagram}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[linear-gradient(135deg,#f58529,#dd2a7b_52%,#8134af)] px-4 font-semibold text-white shadow-[0_8px_20px_rgba(221,42,123,0.28)] sm:scale-105"
+            >
+              <Instagram className="size-4" aria-hidden />
+              Instagram
+            </button>
+            <button
+              type="button"
+              onClick={shareLinkedIn}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#0a66c2] px-4 font-semibold text-white"
+            >
+              <Linkedin className="size-4" aria-hidden />
+              LinkedIn
+            </button>
+          </div>
+          {status ? <p className="mt-3 text-sm leading-relaxed text-muted">{status}</p> : null}
+          <p className="mt-3 text-sm leading-relaxed text-muted">
+            Instagram kan inte ta emot ett färdigt feed-inlägg från webben. Vi kopierar texten, laddar ner bilden och öppnar appen.
+          </p>
         </div>
       </div>
     </div>
