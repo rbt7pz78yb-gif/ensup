@@ -99,12 +99,67 @@ export async function copyShareText(text: string) {
   }
 }
 
-export function openShareWindow(url: string) {
-  const width = 640;
-  const height = 720;
-  const left = Math.max(0, Math.round(window.screenX + (window.outerWidth - width) / 2));
-  const top = Math.max(0, Math.round(window.screenY + (window.outerHeight - height) / 2));
-  const features = `popup=yes,width=${width},height=${height},left=${left},top=${top}`;
-  const win = window.open(url, "ensup-share", features);
-  if (!win) window.location.href = url;
+function ua() {
+  return typeof navigator === "undefined" ? "" : navigator.userAgent;
+}
+
+export function isAndroid() {
+  return /Android/i.test(ua());
+}
+
+export function isIOS() {
+  return /iPhone|iPad|iPod/i.test(ua());
+}
+
+function androidIntent(hostAndPath: string, pkg: string, fallback: string) {
+  return `intent://${hostAndPath}#Intent;scheme=https;package=${pkg};S.browser_fallback_url=${encodeURIComponent(fallback)};end`;
+}
+
+export function openInApp(appUrl: string, webUrl: string, androidUrl?: string) {
+  if (isAndroid()) {
+    window.location.href = androidUrl ?? appUrl;
+    return;
+  }
+  if (isIOS()) {
+    const started = Date.now();
+    window.location.href = appUrl;
+    window.setTimeout(() => {
+      if (document.visibilityState === "visible" && Date.now() - started < 2000) {
+        window.location.href = webUrl;
+      }
+    }, 1100);
+    return;
+  }
+  window.open(webUrl, "_blank", "noopener,noreferrer");
+}
+
+export function facebookTargets(siteUrl: string) {
+  const web = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`;
+  const path = `www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`;
+  return {
+    web,
+    ios: web,
+    android: androidIntent(path, "com.facebook.katana", web),
+  };
+}
+
+export function linkedinTargets(text: string, siteUrl: string) {
+  const composer = `https://www.linkedin.com/feed/?shareActive=true&mini=true&text=${encodeURIComponent(text)}`;
+  const offsite = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`;
+  const path = `www.linkedin.com/feed/?shareActive=true&mini=true&text=${encodeURIComponent(text)}`;
+  return {
+    web: composer,
+    ios: `linkedin://shareArticle?mini=true&url=${encodeURIComponent(siteUrl)}&summary=${encodeURIComponent(text)}`,
+    iosFallback: composer,
+    android: androidIntent(path, "com.linkedin.android", offsite),
+  };
+}
+
+export function instagramTargets() {
+  const web = "https://www.instagram.com/";
+  return {
+    web,
+    ios: "instagram://app",
+    android: androidIntent("www.instagram.com/", "com.instagram.android", web),
+  };
 }

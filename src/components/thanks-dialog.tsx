@@ -1,11 +1,14 @@
 import { useEffect, useId, useState } from "react";
-import { Facebook, Instagram, Linkedin, X } from "lucide-react";
+import { Check, Copy, Facebook, Instagram, Linkedin, X } from "lucide-react";
 import { campaign } from "@/lib/campaign";
 import {
   consumeReturnedIntent,
   copyShareText,
+  facebookTargets,
+  instagramTargets,
+  linkedinTargets,
   markSwishLeft,
-  openShareWindow,
+  openInApp,
   shareText,
   thanksTitle,
   type SwishIntent,
@@ -42,7 +45,6 @@ export function ThanksHost() {
     window.addEventListener("pagehide", onLeave);
     window.addEventListener("pageshow", onReturn);
     window.addEventListener("focus", onReturn);
-
     onReturn();
 
     return () => {
@@ -65,11 +67,13 @@ function ThanksDialog({
 }) {
   const titleId = useId();
   const [draft, setDraft] = useState("");
+  const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (!intent) return;
     setDraft(shareText(intent.amount));
+    setCopied(false);
     setStatus("");
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -85,30 +89,32 @@ function ThanksDialog({
 
   if (!intent) return null;
 
-  const url = campaign.siteUrl;
+  async function copyDraft() {
+    const ok = await copyShareText(draft);
+    setCopied(ok);
+    setStatus(ok ? "Texten är kopierad." : "Markera texten och kopiera manuellt.");
+    return ok;
+  }
 
   async function shareFacebook() {
-    await copyShareText(draft);
-    setStatus("Texten är kopierad. Klistra in den i rutan ovanför länken på Facebook.");
-    openShareWindow(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-    );
+    await copyDraft();
+    const t = facebookTargets(campaign.siteUrl);
+    setStatus("Öppnar Facebook. Klistra in texten ovanför länken.");
+    openInApp(t.ios, t.web, t.android);
   }
 
   async function shareLinkedIn() {
-    openShareWindow(
-      `https://www.linkedin.com/feed/?shareActive=true&mini=true&text=${encodeURIComponent(draft)}`,
-    );
-    setStatus("LinkedIn öppnas med texten ifylld.");
+    await copyDraft();
+    const t = linkedinTargets(draft, campaign.siteUrl);
+    setStatus("Öppnar LinkedIn.");
+    openInApp(t.ios, t.web, t.android);
   }
 
   async function shareInstagram() {
-    const copied = await copyShareText(draft);
-    setStatus(
-      copied
-        ? "Kopierat. Öppna Instagram, skapa ett inlägg och klistra in."
-        : "Markera texten ovan och kopiera den till Instagram.",
-    );
+    await copyDraft();
+    const t = instagramTargets();
+    setStatus("Texten är kopierad. Öppnar Instagram — klistra in i ett nytt inlägg.");
+    openInApp(t.ios, t.web, t.android);
   }
 
   return (
@@ -146,13 +152,26 @@ function ThanksDialog({
           <p className="mt-3 text-base leading-relaxed text-muted">
             Jag har skänkt en sup. Nu är det din tur.
           </p>
-          <label className="mt-4 block text-sm text-muted" htmlFor="share-draft">
-            Färdigt inlägg
-          </label>
+          <div className="mt-4 flex items-end justify-between gap-3">
+            <label className="text-sm text-muted" htmlFor="share-draft">
+              Färdigt inlägg
+            </label>
+            <button
+              type="button"
+              onClick={copyDraft}
+              className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-gold outline outline-1 -outline-offset-1 outline-gold/40"
+            >
+              {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+              {copied ? "Kopierad" : "Kopiera"}
+            </button>
+          </div>
           <textarea
             id="share-draft"
             value={draft}
-            onChange={(e) => setDraft(e.target.value)}
+            onChange={(e) => {
+              setDraft(e.target.value);
+              setCopied(false);
+            }}
             className="mt-2 min-h-40 w-full resize-y rounded-md bg-bg px-3 py-3 text-sm leading-relaxed text-fg outline outline-1 -outline-offset-1 outline-fg/15"
           />
           <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -167,10 +186,10 @@ function ThanksDialog({
             <button
               type="button"
               onClick={shareInstagram}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[linear-gradient(135deg,#f58529,#dd2a7b_52%,#8134af)] px-4 font-semibold text-white shadow-[0_8px_20px_rgba(221,42,123,0.28)] sm:scale-105"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[linear-gradient(135deg,#f58529,#dd2a7b_52%,#8134af)] px-4 font-semibold text-white sm:scale-105"
             >
               <Instagram className="size-4" aria-hidden />
-              Kopiera
+              Instagram
             </button>
             <button
               type="button"
@@ -182,9 +201,6 @@ function ThanksDialog({
             </button>
           </div>
           {status ? <p className="mt-3 text-sm leading-relaxed text-gold">{status}</p> : null}
-          <p className="mt-3 text-sm leading-relaxed text-muted">
-            LinkedIn får texten ifylld. Facebook öppnar länken med kampanjkortet — klistra in texten ovanför. Instagram: kopiera och klistra in själv.
-          </p>
         </div>
       </div>
     </div>
