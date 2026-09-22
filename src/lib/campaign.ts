@@ -31,8 +31,8 @@ export const campaign = {
     swishQr: "/brand/swish/open.png",
   },
   images: {
-    hero: "/hero-snaps-3k.jpg",
-    ljungby: "/ljungby-storgatan-hq.jpg",
+    hero: "/hero-snaps.jpg",
+    ljungby: "/ljungby-storgatan.jpg",
   },
 } as const;
 
