@@ -4,7 +4,6 @@ import {
   formatSek,
   isLikelyMobile,
   swishAppHref,
-  swishHttpsHref,
 } from "@/lib/campaign";
 import { markSwishIntent } from "@/lib/swish-thanks";
 import { cn } from "@/lib/utils";
@@ -18,7 +17,6 @@ export function SwishPayButton({
   className?: string;
   children?: ReactNode;
 }) {
-  const httpsUrl = swishHttpsHref(amount);
   const appUrl = swishAppHref(amount);
 
   function onClick(e: React.MouseEvent<HTMLAnchorElement>) {
@@ -31,25 +29,13 @@ export function SwishPayButton({
       });
       return;
     }
-    let framed = false;
-    try {
-      framed = Boolean(window.top && window.top !== window.self);
-    } catch {
-      framed = true;
-    }
-    if (framed) return;
     e.preventDefault();
     window.location.href = appUrl;
-    window.setTimeout(() => {
-      if (!document.hidden) window.location.href = httpsUrl;
-    }, 700);
   }
 
   return (
     <a
-      href={httpsUrl}
-      target="_top"
-      rel="noopener noreferrer"
+      href={appUrl}
       onClick={onClick}
       className={cn(
         "inline-flex min-h-14 w-full items-center justify-center rounded-md bg-gold px-6 text-lg font-semibold text-cta-fg transition hover:bg-gold-soft",
