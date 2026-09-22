@@ -27,7 +27,7 @@ export function thanksTitle(amount?: number) {
 
 export function shareText(amount?: number) {
   const gift = amountLabel(amount).toLowerCase();
-  return `Jag skänkte ${gift} till äldre i Ljungby. Skänk du också: ${campaign.siteUrl}`;
+  return `Jag skänkte ${gift} till äldre i Ljungby. Skänk du också.`;
 }
 
 export function markSwishIntent(amount?: number) {

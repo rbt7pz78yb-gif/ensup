@@ -88,7 +88,6 @@ function ThanksDialog({
     if (navigator.share) {
       try {
         await navigator.share({
-          title: campaign.name,
           text,
           url,
         });
@@ -98,7 +97,7 @@ function ThanksDialog({
       }
     }
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(`${text} ${url}`);
       setCopied(true);
     } catch {
       setCopied(true);
