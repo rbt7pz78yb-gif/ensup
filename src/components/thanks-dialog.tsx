@@ -11,10 +11,22 @@ import {
   type SwishIntent,
 } from "@/lib/swish-thanks";
 
+const TEST_INTENT: SwishIntent = {
+  amount: 50,
+  label: "En skål",
+  clickedAt: Date.now(),
+};
+
 export function ThanksHost() {
   const [intent, setIntent] = useState<SwishIntent | null>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("tack") || params.has("dela")) {
+      setIntent(TEST_INTENT);
+      return;
+    }
+
     const onLeave = () => markSwishLeft();
     const onReturn = () => {
       const next = consumeReturnedIntent();
