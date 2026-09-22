@@ -254,6 +254,9 @@ export function LjungbySection() {
       <img
         src={campaign.images.ljungby}
         alt="Storgatan i Ljungby."
+        width={1920}
+        height={1079}
+        decoding="async"
         className="absolute inset-0 size-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-bg/40" />
