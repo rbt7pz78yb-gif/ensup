@@ -1,10 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  campaign,
-  formatSek,
-  isLikelyMobile,
-  swishAppHref,
-} from "@/lib/campaign";
+import { campaign, formatSek, isLikelyMobile, swishAppHref } from "@/lib/campaign";
 import { markSwishIntent } from "@/lib/swish-thanks";
 import { cn } from "@/lib/utils";
 
@@ -27,10 +22,7 @@ export function SwishPayButton({
         behavior: "smooth",
         block: "center",
       });
-      return;
     }
-    e.preventDefault();
-    window.location.href = appUrl;
   }
 
   return (
