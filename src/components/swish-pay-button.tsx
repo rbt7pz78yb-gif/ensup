@@ -6,7 +6,7 @@ import {
   swishAppHref,
   swishHttpsHref,
 } from "@/lib/campaign";
-import { cn } from "@/lib/utils";
+import { markSwishIntent } from "@/lib/swish-thanks";
 
 export function SwishPayButton({
   amount,
@@ -21,6 +21,7 @@ export function SwishPayButton({
   const appUrl = swishAppHref(amount);
 
   function onClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    markSwishIntent(amount);
     if (!isLikelyMobile()) {
       e.preventDefault();
       document.getElementById("swish-qr")?.scrollIntoView({

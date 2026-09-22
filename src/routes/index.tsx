@@ -12,6 +12,7 @@ import {
   RoundTableSwedenSection,
 } from "@/components/campaign-sections";
 import { SiteFooter } from "@/components/site-footer";
+import { ThanksHost } from "@/components/thanks-dialog";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -31,6 +32,7 @@ function Home() {
         <ContactSection />
       </main>
       <SiteFooter />
+      <ThanksHost />
     </>
   );
 }
