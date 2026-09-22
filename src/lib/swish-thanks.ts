@@ -35,7 +35,7 @@ export function shareText(amount?: number) {
     `${campaign.tagline} Swisha 20, 50, 100 eller 500 kr till ${campaign.swishNumberDisplay}. Meddelande: ${campaign.swishMessage}.`,
     "",
     "Alkohol är frivilligt – det viktiga är skålen.",
-    campaign.siteHost,
+    campaign.siteUrl,
     "",
     "#skänkensup #ljungby #rt71",
   ].join("\n");
@@ -99,31 +99,12 @@ export async function copyShareText(text: string) {
   }
 }
 
-export function tryOpenApp(appUrl: string, webUrl: string) {
-  const started = Date.now();
-  const timer = window.setTimeout(() => {
-    if (document.visibilityState === "visible" && Date.now() - started < 1800) {
-      window.location.href = webUrl;
-    }
-  }, 900);
-  const cancel = () => window.clearTimeout(timer);
-  window.addEventListener("pagehide", cancel, { once: true });
-  window.addEventListener("blur", cancel, { once: true });
-  window.location.href = appUrl;
-}
-
-export async function downloadCampaignImage() {
-  const src = campaign.images.hero;
-  try {
-    const res = await fetch(src);
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "skank-en-sup.jpg";
-    a.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 2000);
-  } catch {
-    window.open(src, "_blank", "noopener,noreferrer");
-  }
+export function openShareWindow(url: string) {
+  const width = 640;
+  const height = 720;
+  const left = Math.max(0, Math.round(window.screenX + (window.outerWidth - width) / 2));
+  const top = Math.max(0, Math.round(window.screenY + (window.outerHeight - height) / 2));
+  const features = `popup=yes,width=${width},height=${height},left=${left},top=${top}`;
+  const win = window.open(url, "ensup-share", features);
+  if (!win) window.location.href = url;
 }

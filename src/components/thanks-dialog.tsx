@@ -4,11 +4,10 @@ import { campaign } from "@/lib/campaign";
 import {
   consumeReturnedIntent,
   copyShareText,
-  downloadCampaignImage,
   markSwishLeft,
+  openShareWindow,
   shareText,
   thanksTitle,
-  tryOpenApp,
   type SwishIntent,
 } from "@/lib/swish-thanks";
 
@@ -75,31 +74,29 @@ function ThanksDialog({
   if (!intent) return null;
 
   const url = campaign.siteUrl;
-  const facebookWeb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(draft)}`;
-  const linkedinWeb = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 
   async function shareFacebook() {
     await copyShareText(draft);
-    tryOpenApp(`fb://facewebmodal/f?href=${encodeURIComponent(facebookWeb)}`, facebookWeb);
+    setStatus("Texten är kopierad. Klistra in den i rutan ovanför länken på Facebook.");
+    openShareWindow(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    );
   }
 
   async function shareLinkedIn() {
-    await copyShareText(`${draft}\n\n${url}`);
-    tryOpenApp(
-      `linkedin://shareArticle?mini=true&url=${encodeURIComponent(url)}&summary=${encodeURIComponent(draft)}`,
-      linkedinWeb,
+    openShareWindow(
+      `https://www.linkedin.com/feed/?shareActive=true&mini=true&text=${encodeURIComponent(draft)}`,
     );
+    setStatus("LinkedIn öppnas med texten ifylld.");
   }
 
   async function shareInstagram() {
     const copied = await copyShareText(draft);
-    await downloadCampaignImage();
     setStatus(
       copied
-        ? "Texten är kopierad och bilden nedladdad. Öppnar Instagram — klistra in texten och välj bilden."
-        : "Öppnar Instagram. Klistra in texten och välj kampanjbilden.",
+        ? "Kopierat. Öppna Instagram, skapa ett inlägg och klistra in."
+        : "Markera texten ovan och kopiera den till Instagram.",
     );
-    tryOpenApp("instagram://app", "https://www.instagram.com/");
   }
 
   return (
@@ -161,7 +158,7 @@ function ThanksDialog({
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[linear-gradient(135deg,#f58529,#dd2a7b_52%,#8134af)] px-4 font-semibold text-white shadow-[0_8px_20px_rgba(221,42,123,0.28)] sm:scale-105"
             >
               <Instagram className="size-4" aria-hidden />
-              Instagram
+              Kopiera
             </button>
             <button
               type="button"
@@ -172,9 +169,9 @@ function ThanksDialog({
               LinkedIn
             </button>
           </div>
-          {status ? <p className="mt-3 text-sm leading-relaxed text-muted">{status}</p> : null}
+          {status ? <p className="mt-3 text-sm leading-relaxed text-gold">{status}</p> : null}
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            Instagram kan inte ta emot ett färdigt feed-inlägg från webben. Vi kopierar texten, laddar ner bilden och öppnar appen.
+            LinkedIn får texten ifylld. Facebook öppnar länken med kampanjkortet — klistra in texten ovanför. Instagram: kopiera och klistra in själv.
           </p>
         </div>
       </div>
