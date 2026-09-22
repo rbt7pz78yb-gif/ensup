@@ -4,11 +4,11 @@ import { campaign } from "@/lib/campaign";
 import {
   consumeReturnedIntent,
   copyShareText,
-  facebookTargets,
-  instagramTargets,
-  linkedinTargets,
+  facebookShareUrl,
+  isMobile,
+  linkedinComposerUrl,
   markSwishLeft,
-  openInApp,
+  openNew,
   shareText,
   thanksTitle,
   type SwishIntent,
@@ -98,23 +98,23 @@ function ThanksDialog({
 
   async function shareFacebook() {
     await copyDraft();
-    const t = facebookTargets(campaign.siteUrl);
     setStatus("Öppnar Facebook. Klistra in texten ovanför länken.");
-    openInApp(t.ios, t.web, t.android);
+    openNew(facebookShareUrl(campaign.siteUrl));
   }
 
   async function shareLinkedIn() {
-    await copyDraft();
-    const t = linkedinTargets(draft, campaign.siteUrl);
-    setStatus("Öppnar LinkedIn.");
-    openInApp(t.ios, t.web, t.android);
+    setStatus("Öppnar LinkedIn med texten ifylld.");
+    openNew(linkedinComposerUrl(draft));
   }
 
   async function shareInstagram() {
     await copyDraft();
-    const t = instagramTargets();
-    setStatus("Texten är kopierad. Öppnar Instagram — klistra in i ett nytt inlägg.");
-    openInApp(t.ios, t.web, t.android);
+    if (isMobile()) {
+      setStatus("Texten är kopierad. Öppnar Instagram.");
+      openNew("instagram://app");
+    } else {
+      setStatus("Texten är kopierad. Öppna Instagram i telefonen och klistra in.");
+    }
   }
 
   return (
