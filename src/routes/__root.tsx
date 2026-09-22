@@ -5,10 +5,19 @@ import { SiteAnalytics } from "@/components/site-analytics";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Skänk en sup | RT71 Ljungby";
+const SITE_NAME = "Skänk en sup";
 const DESCRIPTION =
   "En julskål för äldre i Ljungby. Skänk en sup. Round Table 71 Ljungby.";
 const SITE_URL = "https://ensup.se/";
 const OG_IMAGE = "https://ensup.se/og-share.jpg";
+
+const websiteJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  alternateName: ["Skänk En Sup", "RT71 Ljungby"],
+  url: SITE_URL,
+});
 
 export const Route = createRootRoute({
   head: () => ({
@@ -17,11 +26,13 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: APP_NAME },
       { name: "description", content: DESCRIPTION },
+      { name: "application-name", content: SITE_NAME },
+      { name: "apple-mobile-web-app-title", content: SITE_NAME },
       { name: "theme-color", content: "#07080A" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "sv_SE" },
       { property: "og:url", content: SITE_URL },
-      { property: "og:site_name", content: "Skänk en sup" },
+      { property: "og:site_name", content: SITE_NAME },
       { property: "og:title", content: APP_NAME },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:image", content: OG_IMAGE },
@@ -55,6 +66,10 @@ export const Route = createRootRoute({
     <html lang="sv" className="antialiased" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: websiteJsonLd }}
+        />
       </head>
       <body className="bg-bg text-fg">
         <PreviewHostBridge />
