@@ -9,7 +9,7 @@ const SITE_NAME = "Skänk en sup";
 const DESCRIPTION =
   "En julskål för äldre i Ljungby. Skänk en sup. Round Table 71 Ljungby.";
 const SITE_URL = "https://ensup.se/";
-const OG_IMAGE = "https://ensup.se/og-share.jpg";
+const OG_IMAGE = "https://ensup.se/og.png";
 
 const websiteJsonLd = JSON.stringify({
   "@context": "https://schema.org",

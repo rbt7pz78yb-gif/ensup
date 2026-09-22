@@ -7,6 +7,7 @@ import {
   swishHttpsHref,
 } from "@/lib/campaign";
 import { markSwishIntent } from "@/lib/swish-thanks";
+import { cn } from "@/lib/utils";
 
 export function SwishPayButton({
   amount,
