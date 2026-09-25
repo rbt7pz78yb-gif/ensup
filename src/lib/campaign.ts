@@ -11,7 +11,7 @@ export const campaign = {
   swishMessage: "Skänk en sup",
 
   // Ändra bara det här talet när mer kommit in. Spara filen, så uppdateras sidan.
-  currentAmount: 1000,
+  currentAmount: 100,
 
   amounts: [
     { value: 20, label: "En sup" },
