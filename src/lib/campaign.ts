@@ -10,7 +10,8 @@ export const campaign = {
   swishNumberDisplay: "123 018 38 63",
   swishMessage: "Skänk en sup",
 
-  currentAmount: 0,
+  // Ändra bara det här talet när mer kommit in. Spara filen, så uppdateras sidan.
+  currentAmount: 100,
 
   amounts: [
     { value: 20, label: "En sup" },

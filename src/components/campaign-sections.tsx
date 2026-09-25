@@ -19,6 +19,30 @@ function Title({ children }: { children: ReactNode }) {
   );
 }
 
+function CollectedBox() {
+  const total = campaign.currentAmount;
+  const glasses = Math.min(16, Math.floor(total / 20));
+
+  return (
+    <div className="mt-6 rounded-lg bg-surface px-5 py-5 outline outline-1 -outline-offset-1 outline-fg/10">
+      <p className="font-display text-sm tracking-[0.28em] text-gold">Hittills</p>
+      <p className="mt-1 font-display text-5xl tracking-[0.04em] text-fg">{formatSek(total)}</p>
+      <p className="mt-2 text-base text-muted">Insamlat till julskålen.</p>
+      {glasses > 0 ? (
+        <div className="mt-4 flex flex-wrap items-end gap-2" aria-hidden>
+          {Array.from({ length: glasses }, (_, i) => (
+            <span key={i} className="flex flex-col items-center">
+              <span className="block h-3 w-2.5 rounded-t-[2px] border border-gold/80 bg-gold/25" />
+              <span className="block h-3 w-px bg-gold/70" />
+              <span className="block h-px w-3 bg-gold/70" />
+            </span>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function DonationSection() {
   const selected = useDonate((s) => s.selected);
   const custom = useDonate((s) => s.custom);
@@ -82,6 +106,7 @@ export function DonationSection() {
             </label>
           ) : null}
           <SwishPayButton amount={amount} className="mt-6" />
+          <CollectedBox />
           <p className="mt-4 flex items-start gap-2 text-sm text-faint">
             <Lock className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
             <span>
