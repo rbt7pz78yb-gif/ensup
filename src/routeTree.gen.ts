@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiSwishKlickRouteImport } from './routes/api/swish-klick'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSwishKlickRoute = ApiSwishKlickRouteImport.update({
+  id: '/api/swish-klick',
+  path: '/api/swish-klick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/swish-klick': typeof ApiSwishKlickRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/swish-klick': typeof ApiSwishKlickRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/swish-klick': typeof ApiSwishKlickRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/swish-klick'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/swish-klick'
+  id: '__root__' | '/' | '/api/swish-klick'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiSwishKlickRoute: typeof ApiSwishKlickRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/swish-klick': {
+      id: '/api/swish-klick'
+      path: '/api/swish-klick'
+      fullPath: '/api/swish-klick'
+      preLoaderRoute: typeof ApiSwishKlickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiSwishKlickRoute: ApiSwishKlickRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

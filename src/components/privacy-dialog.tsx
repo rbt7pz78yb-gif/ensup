@@ -107,7 +107,8 @@ export function PrivacyDialog({
           <p className="mt-2">
             Vi räknar visningar med Vercel Analytics för att se hur sidan används.
             Den sätter inga cookies och samlar inte in namn, e-post eller andra
-            uppgifter du skriver i formuläret.
+            uppgifter du skriver i formuläret. Ett tryck på en Swish-knapp räknas
+            som ett tal. Vi sparar inte vem som tryckte.
           </p>
 
           <h3 className="mt-6 font-display text-xl tracking-[0.08em] text-fg">

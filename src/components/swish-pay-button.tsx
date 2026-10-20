@@ -16,6 +16,7 @@ export function SwishPayButton({
 
   function onClick(e: React.MouseEvent<HTMLAnchorElement>) {
     markSwishIntent(amount);
+    fetch("/api/swish-klick", { method: "POST", keepalive: true }).catch(() => {});
     if (!isLikelyMobile()) {
       e.preventDefault();
       document.getElementById("swish-qr")?.scrollIntoView({
