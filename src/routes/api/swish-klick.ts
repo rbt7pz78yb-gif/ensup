@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const HIT = "https://abacus.jasoncameron.dev/hit/ensup.se/rt71-swishknapp";
-const READ = "https://abacus.jasoncameron.dev/get/ensup.se/rt71-swishknapp";
+const HIT = "https://abacus.jasoncameron.dev/hit/ensup.se/rt71-swishknapp-nu";
+const READ = "https://abacus.jasoncameron.dev/get/ensup.se/rt71-swishknapp-nu";
 
 export const Route = createFileRoute("/api/swish-klick")({
   server: {
