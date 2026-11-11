@@ -145,6 +145,39 @@ export function GoalSection() {
   );
 }
 
+export function ImpactSection() {
+  return (
+    <section id="skillnad" className="scroll-mt-16 border-t border-line py-16 md:py-24">
+      <div className="wrap section-pad max-w-3xl">
+        <Eyebrow>Ditt bidrag</Eyebrow>
+        <Title>Så gör ditt bidrag skillnad</Title>
+        <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+          <p>
+            Pengarna från Skänk en sup går till snaps från Lydén Distillery, här
+            i Ljungby. Vi i Round Table 71 köper flaskorna och lämnar dem till de
+            särskilda boenden i kommunen som tackat ja.
+          </p>
+          <p>
+            Tanken är enkel. De äldre som själva vill och kan ska kunna få en
+            liten julskål till julmaten. En stund som får vara lite finare.
+          </p>
+          <p>
+            Vi samlar in och lämnar över. Boendena sköter själva om något
+            serveras, och hur det går till, efter sina egna rutiner och regler.
+          </p>
+          <p>
+            Varje swish hjälper. Swisha en sup, och skicka sidan vidare till
+            någon här i stan.
+          </p>
+        </div>
+        <ButtonLink href="#skank" className="mt-8">
+          Swisha en sup
+        </ButtonLink>
+      </div>
+    </section>
+  );
+}
+
 export function CampaignStory() {
   return (
     <section id="kampanjen" className="scroll-mt-16 border-t border-line bg-bg-2 py-16 md:py-24">
@@ -295,7 +328,8 @@ export function MoneySection() {
         <Title>Vart går pengarna?</Title>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            Till en julskål för äldre i Ljungby.
+            Till snapsflaskor från Lydén Distillery, som vi lämnar till de
+            särskilda boenden som tackat ja.
           </p>
           <p>
             Vi redovisar längs vägen hur mycket som kommit in.

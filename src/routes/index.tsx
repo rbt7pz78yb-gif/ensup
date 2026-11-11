@@ -7,6 +7,7 @@ import {
   ContactSection,
   DonationSection,
   GoalSection,
+  ImpactSection,
   LjungbySection,
   MoneySection,
   RoundTableSwedenSection,
@@ -25,6 +26,7 @@ function Home() {
         <DonationSection />
         <GoalSection />
         <CampaignStory />
+        <ImpactSection />
         <AboutSection />
         <RoundTableSwedenSection />
         <LjungbySection />
